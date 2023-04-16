@@ -1,7 +1,13 @@
 <script>
+import {testApi} from './api/test'
 export default {
   onLaunch: function () {
     console.log('App Launch')
+    testApi().then(res => {
+        console.log(res)
+    }).catch(err=>{
+        console.log(err)
+    })
   },
   onShow: function () {
     console.log('App Show')

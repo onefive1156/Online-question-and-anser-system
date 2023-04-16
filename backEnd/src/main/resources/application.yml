@@ -1,1 +1,7 @@
 
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/online_education_platform?characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 180410
+    driver-class-name: com.mysql.cj.jdbc.Driver

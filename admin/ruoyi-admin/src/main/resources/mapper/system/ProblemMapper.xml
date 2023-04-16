@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.ProblemMapper">
+    
+    <resultMap type="Problem" id="ProblemResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="authorId"    column="author_id"    />
+        <result property="details"    column="details"    />
+        <result property="imgUrl"    column="img_url"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="delFlag"    column="del_flag"    />
+    </resultMap>
+
+    <resultMap id="ProblemAnswerResult" type="Problem" extends="ProblemResult">
+        <collection property="answerList" notNullColumn="sub_id" javaType="java.util.List" resultMap="AnswerResult" />
+    </resultMap>
+
+    <resultMap type="Answer" id="AnswerResult">
+        <result property="id"    column="sub_id"    />
+        <result property="name"    column="sub_name"    />
+        <result property="authorId"    column="sub_author_id"    />
+        <result property="details"    column="sub_details"    />
+        <result property="imgUrl"    column="sub_img_url"    />
+        <result property="likes"    column="sub_likes"    />
+        <result property="createTime"    column="sub_create_time"    />
+        <result property="editeTime"    column="sub_edite_time"    />
+        <result property="delFlag"    column="sub_del_flag"    />
+        <result property="belongsTo"    column="sub_belongs_to"    />
+    </resultMap>
+
+    <sql id="selectProblemVo">
+        select id, name, author_id, details, img_url, create_time, del_flag from problem
+    </sql>
+
+    <select id="selectProblemList" parameterType="Problem" resultMap="ProblemResult">
+        <include refid="selectProblemVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="authorId != null "> and author_id = #{authorId}</if>
+            <if test="details != null  and details != ''"> and details = #{details}</if>
+            <if test="imgUrl != null  and imgUrl != ''"> and img_url = #{imgUrl}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectProblemById" parameterType="Long" resultMap="ProblemAnswerResult">
+        select a.id, a.name, a.author_id, a.details, a.img_url, a.create_time, a.del_flag,
+ b.id as sub_id, b.name as sub_name, b.author_id as sub_author_id, b.details as sub_details, b.img_url as sub_img_url, b.likes as sub_likes, b.create_time as sub_create_time, b.edite_time as sub_edite_time, b.del_flag as sub_del_flag, b.belongs_to as sub_belongs_to
+        from problem a
+        left join answer b on b.belongs_to = a.id
+        where a.id = #{id}
+    </select>
+        
+    <insert id="insertProblem" parameterType="Problem" useGeneratedKeys="true" keyProperty="id">
+        insert into problem
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="authorId != null">author_id,</if>
+            <if test="details != null">details,</if>
+            <if test="imgUrl != null">img_url,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="delFlag != null">del_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="authorId != null">#{authorId},</if>
+            <if test="details != null">#{details},</if>
+            <if test="imgUrl != null">#{imgUrl},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateProblem" parameterType="Problem">
+        update problem
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="authorId != null">author_id = #{authorId},</if>
+            <if test="details != null">details = #{details},</if>
+            <if test="imgUrl != null">img_url = #{imgUrl},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteProblemById" parameterType="Long">
+        delete from problem where id = #{id}
+    </delete>
+
+    <delete id="deleteProblemByIds" parameterType="String">
+        delete from problem where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+    <delete id="deleteAnswerByBelongsTos" parameterType="String">
+        delete from answer where belongs_to in 
+        <foreach item="belongsTo" collection="array" open="(" separator="," close=")">
+            #{belongsTo}
+        </foreach>
+    </delete>
+
+    <delete id="deleteAnswerByBelongsTo" parameterType="Long">
+        delete from answer where belongs_to = #{belongsTo}
+    </delete>
+
+    <insert id="batchAnswer">
+        insert into answer( id, name, author_id, details, img_url, likes, create_time, edite_time, del_flag, belongs_to) values
+		<foreach item="item" index="index" collection="list" separator=",">
+            ( #{item.id}, #{item.name}, #{item.authorId}, #{item.details}, #{item.imgUrl}, #{item.likes}, #{item.createTime}, #{item.editeTime}, #{item.delFlag}, #{item.belongsTo})
+        </foreach>
+    </insert>
+</mapper>
