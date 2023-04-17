@@ -7,16 +7,21 @@
   </view>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      title: '欢迎使用在线教育平台',
-    }
-  },
-  onLoad() {},
-  methods: {},
-}
+<script setup>
+// export default {
+//   data() {
+//     return {
+//       title: '欢迎使用在线教育平台',
+//     }
+//   },
+//   onLoad() {},
+//   methods: {},
+// }
+// import ref from 'vue'
+import { ref } from 'vue'
+const title = ref('欢迎使用在线教育平台')
+
+
 </script>
 
 <style>
