@@ -1,5 +1,5 @@
 <template>
-    <div>通知页面</div>
+
     <button @click="back">返回</button>
 </template>
 

@@ -1,0 +1,47 @@
+{
+  "passwordSecret": [
+    {
+      "type": "hmac-sha256",
+      "version": 1
+    }
+  ],
+  "tokenSecret": "yangpegnfei",
+  "tokenExpiresIn": 7200,
+  "tokenExpiresThreshold": 600,
+  "passwordErrorLimit": 6,
+  "bindTokenToDevice": false,
+  "passwordErrorRetryTime": 3600,
+  "autoSetInviteCode": false,
+  "forceInviteCode": false,
+  "preferedAppPlatform": "app",
+
+  "mp-weixin": {
+    "oauth": {
+      "weixin": {
+        "appid": "wxda875fce00812557",
+        "appsecret": "c87b9008cb60d0ea9736a28f95f4794a"
+      }
+    }
+  },
+  "mp-alipay": {
+    "oauth": {
+      "alipay": {
+        "appid": "支付宝小程序登录用到的appid、privateKey请参考支付宝小程序的文档进行设置或者获取，https://opendocs.alipay.com/open/291/105971#LDsXr",
+        "privateKey": "支付宝小程序登录用到的appid、privateKey请参考支付宝小程序的文档进行设置或者获取，https://opendocs.alipay.com/open/291/105971#LDsXr"
+      }
+    }
+  },
+  "service": {
+    "sms": {
+      "name": "应用名称，对应短信模版的name",
+      "codeExpiresIn": 300,
+      "smsKey": "短信密钥key，开通短信服务处可以看到",
+      "smsSecret": "短信密钥secret，开通短信服务处可以看到"
+    },
+    "univerify": {
+      "appid": "当前应用的appid，使用云函数URL化，此项必须配置",
+      "apiKey": "apiKey 和 apiSecret 在开发者中心获取，开发者中心：https://dev.dcloud.net.cn/uniLogin/index?type=0，文档：https://ask.dcloud.net.cn/article/37965",
+      "apiSecret": ""
+    }
+  }
+}

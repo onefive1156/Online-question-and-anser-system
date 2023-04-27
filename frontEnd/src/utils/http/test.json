@@ -1,0 +1,74 @@
+{
+  "functionTarget": "uni-id-co",
+  "functionArgs": {
+    "method": "loginByWeixin",
+    "params": [
+      {
+        "code": "0d3O0a0w3xWhw03pQT0w3h85Ny4O0a0P"
+      }
+    ],
+    "clientInfo": {
+      "PLATFORM": "mp-weixin",
+      "OS": "ios",
+      "APPID": "__UNI__BB7E2BE",
+      "DEVICEID": "16817868906789760165",
+      "scene": 1001,
+      "safeAreaInsets": {
+        "top": 20,
+        "left": 0,
+        "right": 0,
+        "bottom": 0
+      },
+      "deviceId": "16817868906789760165",
+      "appId": "__UNI__BB7E2BE",
+      "appName": "我的毕业设计",
+      "appVersion": "1.0.0",
+      "appVersionCode": "100",
+      "appLanguage": "zh-Hans",
+      "uniCompileVersion": "3.7.9",
+      "uniRuntimeVersion": "3.7.9",
+      "uniPlatform": "mp-weixin",
+      "deviceBrand": "devtools",
+      "deviceModel": "iPhone 5",
+      "deviceType": "phone",
+      "devicePixelRatio": 2,
+      "deviceOrientation": "portrait",
+      "osName": "ios",
+      "osVersion": "10.0.1",
+      "hostVersion": "8.0.5",
+      "hostLanguage": "zh-CN",
+      "hostName": "WeChat",
+      "hostSDKVersion": "2.31.0",
+      "hostFontSizeSetting": 16,
+      "windowTop": 0,
+      "windowBottom": 0,
+      "windowWidth": 320,
+      "windowHeight": 456,
+      "screenWidth": 320,
+      "screenHeight": 568,
+      "benchmarkLevel": 1,
+      "batteryLevel": 100,
+      "statusBarHeight": 20,
+      "bluetoothEnabled": true,
+      "locationEnabled": true,
+      "wifiEnabled": true,
+      "cameraAuthorized": true,
+      "locationAuthorized": true,
+      "microphoneAuthorized": true,
+      "notificationAuthorized": true,
+      "safeArea": {
+        "top": 20,
+        "left": 0,
+        "right": 320,
+        "bottom": 568,
+        "width": 320,
+        "height": 548
+      },
+      "enableDebug": false,
+      "mode": "default",
+      "locale": "zh-Hans",
+      "LOCALE": "zh-Hans"
+    },
+    "uniIdToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2NDQ2NmMyODI4MDY0YTc1ODdhNjU0Y2EiLCJyb2xlIjpbXSwicGVybWlzc2lvbiI6W10sInVuaUlkVmVyc2lvbiI6IjEuMC4xMyIsImlhdCI6MTY4MjMzNjgwOCwiZXhwIjoxNjgyMzQ0MDA4fQ.Eeb4Fo82rV1MgLtU1jtG6g4yt1tpwFfy3SQHORLyTjA"
+  }
+}

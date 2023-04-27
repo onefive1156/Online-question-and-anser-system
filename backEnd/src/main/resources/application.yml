@@ -5,3 +5,5 @@ spring:
     username: root
     password: yangpengfei321
     driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    static-path-pattern: /**

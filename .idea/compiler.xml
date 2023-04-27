@@ -8,12 +8,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ruoyi-framework" />
-        <module name="ruoyi-system" />
-        <module name="ruoyi-common" />
-        <module name="ruoyi-generator" />
-        <module name="backEnd" />
-        <module name="ruoyi-quartz" />
         <module name="ruoyi-admin" />
+        <module name="ruoyi-generator" />
+        <module name="ruoyi-quartz" />
+        <module name="ruoyi-common" />
+        <module name="ruoyi-system" />
+        <module name="backEnd" />
       </profile>
     </annotationProcessing>
   </component>
