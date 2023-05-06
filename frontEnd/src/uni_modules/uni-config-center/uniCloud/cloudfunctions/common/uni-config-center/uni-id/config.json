@@ -38,8 +38,8 @@
   "mp-weixin": {
     "oauth": {
       "weixin": {
-        "appid": "微信小程序登录所用的appid、appsecret需要在对应的小程序管理控制台获取",
-        "appsecret": "微信小程序后台获取的appsecret"
+        "appid": "wxda875fce00812557",
+        "appsecret": "2294b3924b7cc58a8bce7ad263a95a26"
       }
     }
   },

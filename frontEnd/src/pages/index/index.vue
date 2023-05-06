@@ -32,6 +32,7 @@
 </template>
 
 <script setup>
+    //2294b3924b7cc58a8bce7ad263a95a26
 // export default {
 //   data() {
 //     return {
@@ -43,8 +44,10 @@
 // }
 // import ref from 'vue'
 import { ref } from 'vue'
+
 import {store,mutations} from '../../uni_modules/uni-id-pages/common/store'
 const title = ref('经典课程')
+const token = uniCloud.importObject("token")
 const swiperItem = ref(['http://localhost:8080/swiper/1.jpg', 'http://localhost:8080/swiper/2.jpg', 'http://localhost:8080/swiper/3.jpg'])
 const courseList = ref(['http://localhost:8080/course/1.jpg', 'http://localhost:8080/course/2.jpg', 'http://localhost:8080/course/3.jpg'])
 const toCourseDetails = ()=>{
@@ -52,6 +55,11 @@ const toCourseDetails = ()=>{
         url: '/pages/courseDetails/index'
     })
 }
+token.checkToken().then(res=>{
+    console.log(res)
+}).catch(err=>{
+    console.log(err)
+})
 console.log(store?.userInfo?.avatar_file?.url)
 console.log(store)
 </script>

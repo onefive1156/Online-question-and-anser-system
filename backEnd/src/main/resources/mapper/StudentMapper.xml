@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.felix.mapper.StudentMapper">
+
+    <resultMap type="Student" id="StudentResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="grade"    column="grade"    />
+        <result property="major"    column="major"    />
+        <result property="age"    column="age"    />
+        <result property="sex"    column="sex"    />
+        <result property="introduce"    column="introduce"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="weixinId"    column="weixin_id"    />
+    </resultMap>
+
+    <sql id="selectStudentVo">
+        select id, name, grade, major, age, sex, introduce, del_flag, weixin_id from student
+    </sql>
+
+    <select id="selectStudentList" parameterType="Student" resultMap="StudentResult">
+        <include refid="selectStudentVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="grade != null  and grade != ''"> and grade = #{grade}</if>
+            <if test="major != null  and major != ''"> and major = #{major}</if>
+            <if test="age != null  and age != ''"> and age = #{age}</if>
+            <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
+            <if test="introduce != null  and introduce != ''"> and introduce = #{introduce}</if>
+            <if test="weixinId != null  and weixinId != ''"> and weixin_id = #{weixinId}</if>
+        </where>
+    </select>
+
+    <select id="selectStudentById" parameterType="Long" resultMap="StudentResult">
+        <include refid="selectStudentVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertStudent" parameterType="Student" useGeneratedKeys="true" keyProperty="id">
+        insert into student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="grade != null">grade,</if>
+            <if test="major != null">major,</if>
+            <if test="age != null">age,</if>
+            <if test="sex != null">sex,</if>
+            <if test="introduce != null">introduce,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="weixinId != null">weixin_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="grade != null">#{grade},</if>
+            <if test="major != null">#{major},</if>
+            <if test="age != null">#{age},</if>
+            <if test="sex != null">#{sex},</if>
+            <if test="introduce != null">#{introduce},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="weixinId != null">#{weixinId},</if>
+        </trim>
+    </insert>
+
+    <update id="updateStudent" parameterType="Student">
+        update student
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="grade != null">grade = #{grade},</if>
+            <if test="major != null">major = #{major},</if>
+            <if test="age != null">age = #{age},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="introduce != null">introduce = #{introduce},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="weixinId != null">weixin_id = #{weixin_id},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteStudentById" parameterType="Long">
+        delete from student where id = #{id}
+    </delete>
+
+    <delete id="deleteStudentByIds" parameterType="String">
+        delete from student where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

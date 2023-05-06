@@ -1,0 +1,7 @@
+{
+  "name": "token",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}

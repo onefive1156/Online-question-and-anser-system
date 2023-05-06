@@ -4,24 +4,31 @@ import {testApi} from './api/test.js'
 import uniIdPageInit from '@/uni_modules/uni-id-pages/init.js'
 import uniImUtils from '@/uni_modules/uni-im/common/utils.js'
 const uniIdCo = uniCloud.importObject("uni-id-co")
+
+// const uniID = uniCloud.importObject('uni-id-common')
 export default {
     onLaunch: async function() {
         console.log('App Launch')
         await uniIdPageInit()
         uniImUtils.init();
     },
+    onLoad: function(){
+
+    },
   onShow: function () {
     console.log('App Show')
-      testApi().then(res=>{
-          console.log(res)
-      }).catch(err=>{
-          console.log(err)
-      })
+      // console.log(uniID)
+      // console.log()
+      // uniID.createInstance({ // 创建uni-id实例，其上方法同uniID
+      //     clientInfo: uniIdCo.clientInfo()
+      // })
       // uniIdCo.getAccountInfo().then(res=>{
       //     console.log(res)
       // }).catch(err=>{
-      //     'console.log(err)'
+      //     console.log(err)
       // })
+      // console.log(uniIdCo.getClientInfo())
+
   },
   onHide: function () {
     console.log('App Hide')

@@ -16,7 +16,8 @@
 			"path": "pages/my/index",
 			"style": {
 				"navigationBarTitleText": "我的"
-			}
+			},
+            "needLogin": true
 		},
 		{
 			"path": "pages/course/index",
@@ -202,7 +203,11 @@
 		"custom": {
 			"fui-(.*)": "firstui-uni/firstui/fui-$1/fui-$1.vue"
 		}
-	}
+	},
+  "uniIdRouter": {
+    "loginPage": "/uni_modules/uni-id-pages/pages/login", // 登录页面路径
+    "resToLogin": true // 自动解析云对象及clientDB的错误码，如果是客户端token不正确或token过期则自动跳转配置的登录页面，配置为false则关闭此行为，默认true
+  }
 
 
 }

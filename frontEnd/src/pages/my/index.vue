@@ -56,11 +56,7 @@
     const favorites = ref(0)
     const focusNum = ref(0)
     const avatarUrl = ref( store.hasLogin ? store.userInfo?.avatar_file.url : 'http://localhost:8080/swiper/1.jpg')
-    // uniIdCo.getAccountInfo().then(res=>{
-    //     console.log(res)
-    // }).catch(err=>{
-    //     console.log(err)
-    // })
+
     const toLogin = ()=>{
         uni.navigateTo({
             "url":"/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin"
