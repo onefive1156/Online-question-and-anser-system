@@ -15,6 +15,8 @@ public interface StudentMapper
      */
     public Student selectStudentById(Long id);
     
+    public Student selectStudentByWXId(String weixinId);
+    
     /**
      * 查询学生管理列表
      *

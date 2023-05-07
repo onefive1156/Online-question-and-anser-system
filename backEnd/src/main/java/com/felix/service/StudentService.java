@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface StudentService{
     public Student selectStudentById(Long id);
-    
+    public Student selectStudentByWXId(String weixinId);
     /**
-     * 查询学生管理列表
+     * 查询学生列表
      *
      * @param student 学生管理
      * @return 学生管理集合
@@ -16,7 +16,7 @@ public interface StudentService{
     public List<Student> selectStudentList(Student student);
     
     /**
-     * 新增学生管理
+     * 新增学生
      *
      * @param student 学生管理
      * @return 结果

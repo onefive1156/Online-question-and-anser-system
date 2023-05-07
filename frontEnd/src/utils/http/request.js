@@ -48,53 +48,75 @@ const defaults = {
 const baseUrl = 'http://localhost:8080'
 // 全局请求封装
 export default (path, data = {}, config = defaults) => {
-    // console.log('%c请求拦截：', ' background:orange', data);
-
-    const token = uni.getStorageSync("token");
-    const Authorization = token ? `Bearer ${uni.getStorageSync("token")}` : "";
-
     if (config.loading) {
         uni.showLoading({
             title: "加载中",
             mask: true
         });
     };
+    const token = uniCloud.importObject("token")
+    return token.checkToken().then(res=>{
+        if(res.status !== 0){
+            uni.showToast({
+                title: '用户校验失败请重新登录',
+                icon: 'none',
 
-    return new Promise((resolve, reject) => {
-        uni.request({
-            header: {
-                Authorization
-            },
-            url: baseUrl + path,
-            method: config.method,
-            data,
-            success(response) {
-                // console.log('%c响应拦截：', ' background:green', response);
-                // if (response.data.code === 3001) {
-                //     logout()
-                // }
-                // if (response.data.code !== 20) {
-                //     uni.showToast({
-                //         icon: "none",
-                //         duration: 4000,
-                //         title: response.data.msg
-                //     });
-                // }
+            })
+            return new Error('用户校验失败')
+        }
+        return new Promise((resolve, reject)=>{
+            return uni.request({
+                url: baseUrl + path,
+                method: config.method,
+                data,
+                success(response) {
+                    resolve(response.data)
+                },
+                fail(err) {
+                    uni.showToast({
+                        icon: "none",
+                        title: '服务响应失败'
+                    });
+                    console.error(err);
+                    reject(err)
+                },
+                complete() {
+                    uni.hideLoading();
+                }
+            })
+        })
+    }).catch(err=>{
+        console.log(err)
 
-                resolve(response.data);
-            },
-            fail(err) {
-                uni.showToast({
-                    icon: "none",
-                    title: '服务响应失败'
-                });
-                console.error(err);
-                reject(err);
-            },
-            complete() {
-                uni.hideLoading();
-            }
-        });
-    });
+    })
+    // return new Promise((resolve, reject) => {
+    //     resolve(token.checkToken())
+    // }).then(res=>{
+    //     // console.log(res.status === 0)
+    //
+    //     return new Promise((resolve, reject) => {
+    //         return uni.request({
+    //             url: baseUrl + path,
+    //             method: config.method,
+    //             data,
+    //             success(response) {
+    //                 resolve(response.data)
+    //             },
+    //             fail(err) {
+    //                 uni.showToast({
+    //                     icon: "none",
+    //                     title: '服务响应失败'
+    //                 });
+    //                 console.error(err);
+    //                 reject(err)
+    //             },
+    //             complete() {
+    //                 uni.hideLoading();
+    //             }
+    //         })
+    //     })
+    // }).catch(err=>{
+    //     console.log(err)
+    // })
 };
 

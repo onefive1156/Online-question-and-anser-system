@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService{
-    @Autowired
+    @Resource
     private StudentMapper studentMapper;
     
     /**
@@ -24,6 +24,11 @@ public class StudentServiceImpl implements StudentService{
     public Student selectStudentById(Long id)
     {
         return studentMapper.selectStudentById(id);
+    }
+    
+    @Override
+    public Student selectStudentByWXId(String weixinId){
+        return studentMapper.selectStudentByWXId(weixinId);
     }
     
     /**

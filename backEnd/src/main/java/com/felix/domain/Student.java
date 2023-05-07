@@ -16,5 +16,7 @@ public class Student
     private String sex;
     private String introduce;
     private Long delFlag;
-    private Long weixinId;
+    private String weixinId;
+    private String studentClass;
+    private Long studentId;
 }

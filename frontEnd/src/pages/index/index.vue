@@ -46,6 +46,7 @@
 import { ref } from 'vue'
 
 import {store,mutations} from '../../uni_modules/uni-id-pages/common/store'
+    import {login} from './../../api/user'
 const title = ref('经典课程')
 const token = uniCloud.importObject("token")
 const swiperItem = ref(['http://localhost:8080/swiper/1.jpg', 'http://localhost:8080/swiper/2.jpg', 'http://localhost:8080/swiper/3.jpg'])
@@ -55,13 +56,14 @@ const toCourseDetails = ()=>{
         url: '/pages/courseDetails/index'
     })
 }
-token.checkToken().then(res=>{
-    console.log(res)
-}).catch(err=>{
-    console.log(err)
-})
-console.log(store?.userInfo?.avatar_file?.url)
-console.log(store)
+
+    login( store.userInfo._id).then(res=>{
+        console.log(res)
+        store.userDetails = res
+        console.log(store)
+    }).catch(err=>{
+        console.log(err)
+    })
 </script>
 
 <style lang="scss">

@@ -14,10 +14,12 @@
         <result property="introduce"    column="introduce"    />
         <result property="delFlag"    column="del_flag"    />
         <result property="weixinId"    column="weixin_id"    />
+        <result property="studentClass"    column="student_class"    />
+        <result property="studentId"    column="student_id"    />
     </resultMap>
 
     <sql id="selectStudentVo">
-        select id, name, grade, major, age, sex, introduce, del_flag, weixin_id from student
+        select id, name, grade, major, age, sex, introduce, del_flag, weixin_id, student_class, student_id from student
     </sql>
 
     <select id="selectStudentList" parameterType="Student" resultMap="StudentResult">
@@ -30,6 +32,8 @@
             <if test="sex != null  and sex != ''"> and sex = #{sex}</if>
             <if test="introduce != null  and introduce != ''"> and introduce = #{introduce}</if>
             <if test="weixinId != null  and weixinId != ''"> and weixin_id = #{weixinId}</if>
+            <if test="studentClass != null  and studentClass != ''"> and student_class = #{studentClass}</if>
+            <if test="studentId != null  and studentId != ''"> and student_id = #{studentId}</if>
         </where>
     </select>
 
@@ -37,7 +41,10 @@
         <include refid="selectStudentVo"/>
         where id = #{id}
     </select>
-
+    <select id="selectStudentByWXId" parameterType="String" resultMap="StudentResult">
+        <include refid="selectStudentVo"/>
+        where weixin_id = #{weixinId}
+    </select>
     <insert id="insertStudent" parameterType="Student" useGeneratedKeys="true" keyProperty="id">
         insert into student
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -49,6 +56,8 @@
             <if test="introduce != null">introduce,</if>
             <if test="delFlag != null">del_flag,</if>
             <if test="weixinId != null">weixin_id,</if>
+            <if test="studentId != null">student_id,</if>
+            <if test="studentClass != null">student_class,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null and name != ''">#{name},</if>
@@ -59,6 +68,8 @@
             <if test="introduce != null">#{introduce},</if>
             <if test="delFlag != null">#{delFlag},</if>
             <if test="weixinId != null">#{weixinId},</if>
+            <if test="studentId != null">#{studentId},</if>
+            <if test="studentClass != null">#{studentClass},</if>
         </trim>
     </insert>
 

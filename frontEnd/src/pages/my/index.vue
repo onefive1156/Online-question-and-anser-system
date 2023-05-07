@@ -46,8 +46,10 @@
 
 <script setup>
     import { ref } from 'vue'
+    import {onShow} from "@dcloudio/uni-app"
     import {store,mutations} from '../../uni_modules/uni-id-pages/common/store'
     const uniIdCo = uniCloud.importObject("uni-id-co")
+    const token = uniCloud.importObject("token")
     const userName = ref( store.hasLogin ? store.userInfo.nickname : '未登录')
     const grade = ref('大四')
     const collage = ref('计算机科学与技术学院')
@@ -55,12 +57,23 @@
     const quesNum = ref(0)
     const favorites = ref(0)
     const focusNum = ref(0)
-    const avatarUrl = ref( store.hasLogin ? store.userInfo?.avatar_file.url : 'http://localhost:8080/swiper/1.jpg')
+    const avatarUrl = ref( store.hasLogin ? store.userInfo?.avatar_file?.url : 'http://localhost:8080/swiper/1.jpg')
 
-    const toLogin = ()=>{
-        uni.navigateTo({
-            "url":"/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin"
+    onShow(()=>{
+        token.checkToken().then(res=>{
+            if(res.status !== 0){
+                uni.navigateTo({
+                    "url":"/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin"
+                })
+            }
+        }).catch(err=>{
+            console.log(err)
         })
+    })
+    const toLogin = ()=>{
+        // uni.navigateTo({
+        //     "url":"/uni_modules/uni-id-pages/pages/login/login-withoutpwd?type=weixin"
+        // })
     }
     const toPersonalDetails = ()=>{
         //uni_modules/uni-id-pages/pages/userinfo/userinfo

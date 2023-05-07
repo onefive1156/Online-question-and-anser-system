@@ -5,19 +5,13 @@
 			<uni-id-pages-avatar width="260rpx" height="260rpx"></uni-id-pages-avatar>
 		</view>
 		<uni-list>
-			<uni-list-item class="item" @click="setNickname('')" title="昵称" :rightText="userInfo.nickname||'未设置'" link>
-			</uni-list-item>
-			<uni-list-item class="item" @click="bindMobile" title="手机号" :rightText="userInfo.mobile||'未绑定'" link>
-			</uni-list-item>
-			<uni-list-item v-if="userInfo.email" class="item" title="电子邮箱" :rightText="userInfo.email">
-			</uni-list-item>
-			<!-- #ifdef APP -->
-      <!-- 如未开通实人认证服务，可以将实名认证入口注释 -->
-			<uni-list-item class="item" @click="realNameVerify" title="实名认证" :rightText="realNameStatus !== 2 ? '未认证': '已认证'" link>
-			</uni-list-item>
-			<!-- #endif -->
-			<uni-list-item v-if="hasPwd" class="item" @click="changePassword" title="修改密码" link>
-			</uni-list-item>
+			<uni-list-item class="item" @click="setUserInfo('')" title="姓名" :rightText="userInfo.name||'未设置'" link/>
+			<uni-list-item class="item" @click="setUserInfo('')" title="年龄" :rightText="userInfo.age||'未设置'" link/>
+			<uni-list-item class="item" @click="setUserInfo('')" title="性别" :rightText="userInfo.sex||'未设置'" link/>
+			<uni-list-item class="item" @click="setUserInfo('')" title="个人简介" :rightText="userInfo.introduce ||'未设置'" link/>
+			<uni-list-item class="item" title="专业" :rightText="userInfo.major||'未设置'"/>
+			<uni-list-item class="item" title="年级" :rightText="userInfo.grade||'未设置'"/>
+			<uni-list-item class="item" title="班级" :rightText="userInfo.studentClass||'未设置'"/>
 		</uni-list>
 		<!-- #ifndef MP -->
 		<uni-list class="mt10">
@@ -25,19 +19,20 @@
 		</uni-list>
 		<!-- #endif -->
 		<uni-popup ref="dialog" type="dialog">
-			<uni-popup-dialog mode="input" :value="userInfo.nickname" @confirm="setNickname" :inputType="setNicknameIng?'nickname':'text'"
+			<uni-popup-dialog mode="input" :value="userInfo.nickname" @confirm="upLoadUserInfo" :inputType="setNicknameIng?'nickname':'text'"
 				title="设置昵称" placeholder="请输入要设置的昵称">
 			</uni-popup-dialog>
 		</uni-popup>
 		<uni-id-pages-bind-mobile ref="bind-mobile-by-sms" @success="bindMobileSuccess"></uni-id-pages-bind-mobile>
-		<template v-if="showLoginManage">
-			<button v-if="userInfo._id" @click="logout">退出登录</button>
-			<button v-else @click="login">去登录</button>
-		</template>
+
+		<view class="logout">
+			<fui-button  @click="logout"  text="退出登录" type="danger"></fui-button>
+		</view>
 	</view>
 </template>
 <script>
 const uniIdCo = uniCloud.importObject("uni-id-co")
+
   import {
     store,
     mutations
@@ -45,7 +40,7 @@ const uniIdCo = uniCloud.importObject("uni-id-co")
 	export default {
     computed: {
       userInfo() {
-        return store.userInfo
+        return store.userDetails
       },
 	  realNameStatus () {
 		  if (!this.userInfo.realNameAuth) {
@@ -77,14 +72,15 @@ const uniIdCo = uniCloud.importObject("uni-id-co")
 		async onShow() {
 			this.univerifyStyle.authButton.title = "本机号码一键绑定"
 			this.univerifyStyle.otherLoginButton.title = "其他号码绑定"
+			this.$refs.dialog.open()
 		},
 		async onLoad(e) {
 			if (e.showLoginManage) {
 				this.showLoginManage = true //通过页面传参隐藏登录&退出登录按钮
 			}
 			//判断当前用户是否有密码，否则就不显示密码修改功能
-			let res = await uniIdCo.getAccountInfo()
-			this.hasPwd = res.isPasswordSet
+			// let res = await uniIdCo.getAccountInfo()
+			// this.hasPwd = res.isPasswordSet
 		},
 		methods: {
 			login() {
@@ -95,8 +91,14 @@ const uniIdCo = uniCloud.importObject("uni-id-co")
 					}
 				})
 			},
+			upLoadUserInfo(){
+
+			},
 			logout() {
 				mutations.logout()
+				uni.switchTab({
+					url: '/pages/index/index'
+				})
 			},
 			bindMobileSuccess() {
 				mutations.updateUserInfo()
@@ -158,16 +160,15 @@ const uniIdCo = uniCloud.importObject("uni-id-co")
 					url: './bind-mobile/bind-mobile'
 				})
 			},
-			setNickname(nickname) {
-				if (nickname) {
-					mutations.updateUserInfo({
-						nickname
-					})
-					this.setNicknameIng = false
-					this.$refs.dialog.close()
-				} else {
-					this.$refs.dialog.open()
-				}
+			setUserInfo(info) {
+				console.log('123')
+				// if (nickname) {
+				// 	this.setNicknameIng = false
+				// 	this.$refs.dialog.close()
+				// } else {
+				// 	this.$refs.dialog.open()
+				// }
+				this.$refs.dialog.open()
 			},
 			deactivate(){
 				uni.navigateTo({
@@ -223,7 +224,11 @@ const uniIdCo = uniCloud.importObject("uni-id-co")
 	.uni-content {
 		padding: 0;
 	}
-
+	.logout{
+		width: 80%;
+		height: 96rpx;
+		margin: 0 auto;
+	}
 	/* #ifndef APP-NVUE */
 	view {
 		display: flex;
@@ -265,7 +270,6 @@ const uniIdCo = uniCloud.importObject("uni-id-co")
 		background-color: #FFFFFF;
 		width: 80%;
 	}
-
 	.mt10 {
 		margin-top: 10px;
 	}

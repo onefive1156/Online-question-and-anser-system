@@ -9,7 +9,8 @@ let hostUserInfo = uni.getStorageSync('uni-id-pages-userInfo')||{}
 // console.log( hostUserInfo);
 const data = {
 	userInfo: hostUserInfo,
-	hasLogin: Object.keys(hostUserInfo).length != 0
+	hasLogin: Object.keys(hostUserInfo).length != 0,
+	userDetails: {}
 }
 
 // console.log('data', data);
